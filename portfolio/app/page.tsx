@@ -35,8 +35,7 @@ const CONTENT = {
         "The system was developed to improve the efficiency and accuracy of commission-related processes. By automating these tasks, the application reduces processing time, minimizes human error, and improves overall reliability. Overall, the project enhances the productivity of commission personnel by streamlining daily operations.",
       description:
         "A settlement-optimizing API for group expenses. The core problem was minimizing the number of payments needed to settle a group's debts — solved with a graph-reduction algorithm that cut average payments per group by 60%.",
-      live: "https://example.com",
-      code: "https://github.com/yourhandle/ledger",
+      live: "https://ninedwarfs.kesug.com/ninedwarfs/Landing.php",
     },
     {
       title: "Zarate student registration and automated grading system",
