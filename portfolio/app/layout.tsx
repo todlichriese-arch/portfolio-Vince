@@ -25,7 +25,7 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Vince Tee Portfolio",
   description:
-    "Portfolio of Alex Morgan, software engineer focused on backend systems and developer tooling.",
+    "Portfolio of Vince Tee, developer focused on developing systems and databases.",
 };
 
 export default function RootLayout({
