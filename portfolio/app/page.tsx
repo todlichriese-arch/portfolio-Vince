@@ -121,11 +121,112 @@ function Reveal({
   );
 }
 
+// Live, slowly drifting network of connected nodes — reads like a systems
+// diagram quietly running in the background. Pauses if the user has
+// prefers-reduced-motion enabled, and pauses when the tab isn't visible.
+function NetworkBackground() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    type Point = { x: number; y: number; vx: number; vy: number };
+    const COUNT = Math.max(24, Math.min(70, Math.floor((width * height) / 26000)));
+    const points: Point[] = Array.from({ length: COUNT }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.18,
+      vy: (Math.random() - 0.5) * 0.18,
+    }));
+
+    const LINK_DIST = 150;
+    let raf = 0;
+    let running = true;
+
+    function resize() {
+      width = canvas!.width = window.innerWidth;
+      height = canvas!.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resize);
+
+    function onVisibility() {
+      running = document.visibilityState === "visible";
+      if (running && !prefersReduced) draw();
+    }
+    document.addEventListener("visibilitychange", onVisibility);
+
+    function draw() {
+      if (!running) return;
+      ctx!.clearRect(0, 0, width, height);
+
+      for (const p of points) {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
+      }
+
+      for (let i = 0; i < points.length; i++) {
+        for (let j = i + 1; j < points.length; j++) {
+          const a = points[i];
+          const b = points[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < LINK_DIST) {
+            ctx!.strokeStyle = `rgba(11, 31, 58, ${0.07 * (1 - dist / LINK_DIST)})`;
+            ctx!.lineWidth = 1;
+            ctx!.beginPath();
+            ctx!.moveTo(a.x, a.y);
+            ctx!.lineTo(b.x, b.y);
+            ctx!.stroke();
+          }
+        }
+      }
+
+      for (const p of points) {
+        ctx!.fillStyle = "rgba(185, 129, 47, 0.4)";
+        ctx!.beginPath();
+        ctx!.arc(p.x, p.y, 1.6, 0, Math.PI * 2);
+        ctx!.fill();
+      }
+
+      if (!prefersReduced) {
+        raf = requestAnimationFrame(draw);
+      }
+    }
+
+    draw();
+
+    return () => {
+      window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", onVisibility);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 -z-10 pointer-events-none"
+      aria-hidden="true"
+    />
+  );
+}
+
 export default function Home() {
   return (
     <main className="relative min-h-screen bg-paper text-ink overflow-x-hidden">
-      {/* Faint animated blueprint grid, sits behind everything */}
-      <div className="fixed inset-0 -z-10 bg-grid-drift pointer-events-none" aria-hidden="true" />
+      {/* Live animated node network, sits behind everything */}
+      <NetworkBackground />
 
       <header className="sticky top-0 z-10 bg-paper/90 backdrop-blur border-b border-line">
         <nav className="max-w-dossier mx-auto px-6 sm:px-8 h-14 flex items-center justify-between">
@@ -155,7 +256,7 @@ export default function Home() {
               className="field-note text-xs text-amber mb-6 animate-fade-up"
               style={{ animationDelay: "0ms" }}
             >
-              {CONTENT.fileNo} — ENGINEERING PORTFOLIO
+              {CONTENT.fileNo} — PORTFOLIO
             </p>
             <h1
               className="font-serif text-5xl sm:text-7xl leading-[1.05] mb-6 animate-fade-up"
