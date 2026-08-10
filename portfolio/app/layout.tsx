@@ -23,7 +23,7 @@ const mono = JetBrains_Mono({
 
 // EDIT THIS — page title & description shown in search results and browser tabs
 export const metadata: Metadata = {
-  title: "Alex Morgan — Software Engineer",
+  title: "Vince Tee Portfolio",
   description:
     "Portfolio of Alex Morgan, software engineer focused on backend systems and developer tooling.",
 };
