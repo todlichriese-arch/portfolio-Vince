@@ -63,7 +63,7 @@ const CONTENT = {
       period: "2026",
       role: "Intern developer",
       org: "Zarate Hospital and College",
-      detail: "Own the payments service. Led migration to event-driven architecture, cutting P95 latency by 35%.",
+      detail: "Developed their registration system with automated grading with a team, focused mostly on backend.",
     },
   ],
 };
