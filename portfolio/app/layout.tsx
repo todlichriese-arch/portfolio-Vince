@@ -28,101 +28,78 @@ export const metadata: Metadata = {
     "Portfolio of Vince Wendell S. Tee, developer focused on backend systems and web applications.",
 };
 
-// A small, clearly-visible line-art scene of someone working at a desk,
-// rendered as a direct sibling of the page content at the <body> level so
-// no ancestor's overflow/positioning can ever clip or bury it. Pure CSS
-// animation (see globals.css) — blinking cursor, sequential "typing" lines,
-// rising coffee steam, and a softly pulsing desk lamp. Hidden on small
-// screens so it never competes with mobile content.
-function WorkingScene() {
+// A small deploy terminal that types out a real-looking git push / build /
+// deploy sequence on a loop, blinking cursor included. Styled like actual
+// developer tooling rather than an illustration — signals engineering
+// craft directly rather than through a decorative scene. Pure CSS
+// (width-reveal + steps()), no JavaScript, works fully offline.
+function TerminalScene() {
   return (
     <div
-      className="hidden md:block fixed bottom-6 right-6 z-0 w-[240px] opacity-90 pointer-events-none"
+      className="hidden md:block fixed bottom-6 right-6 z-0 w-[270px] opacity-95 pointer-events-none"
       aria-hidden="true"
     >
-      <svg viewBox="0 0 240 190" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <line x1="10" y1="150" x2="230" y2="150" stroke="#0B1F3A" strokeWidth="2" />
-        <circle cx="70" cy="90" r="14" stroke="#0B1F3A" strokeWidth="2" />
-        <path
-          d="M50 148 C 50 115, 60 104, 78 104 C 96 104, 104 118, 100 138"
-          stroke="#0B1F3A"
-          strokeWidth="2"
-        />
-        <path d="M46 150 L46 108" stroke="#0B1F3A" strokeWidth="2" />
-        <path d="M95 150 L150 150 L145 140 L100 140 Z" stroke="#0B1F3A" strokeWidth="2" />
-        <rect x="100" y="108" width="42" height="32" rx="2" stroke="#0B1F3A" strokeWidth="2" />
-        <rect className="type-line type-line-1" x="105" y="115" width="20" height="2.5" fill="#0B1F3A" />
-        <rect className="type-line type-line-2" x="105" y="121" width="28" height="2.5" fill="#0B1F3A" />
-        <rect className="type-line type-line-3" x="105" y="127" width="16" height="2.5" fill="#0B1F3A" />
-        <rect className="cursor-blink" x="105" y="133" width="6" height="2.5" fill="#B9812F" />
-        <path d="M170 132 L170 148 L188 148 L188 132 Z" stroke="#0B1F3A" strokeWidth="2" />
-        <path d="M188 135 Q196 135 196 140 Q196 145 188 145" stroke="#0B1F3A" strokeWidth="2" />
-        <path
-          className="steam steam-1"
-          d="M174 128 Q170 120 174 114 Q178 108 174 100"
-          stroke="#0B1F3A"
-          strokeWidth="1.5"
-        />
-        <path
-          className="steam steam-2"
-          d="M182 128 Q178 120 182 114 Q186 108 182 100"
-          stroke="#0B1F3A"
-          strokeWidth="1.5"
-        />
-        <path d="M40 60 L40 40 L20 30" stroke="#0B1F3A" strokeWidth="2" />
-        <circle className="lamp-glow" cx="20" cy="30" r="7" fill="#B9812F" />
-      </svg>
+      <div className="rounded-lg border border-ink/10 bg-ink shadow-xl overflow-hidden">
+        <div className="flex items-center gap-1.5 px-3 py-2 border-b border-white/10">
+          <span className="w-2 h-2 rounded-full bg-white/20" />
+          <span className="w-2 h-2 rounded-full bg-white/20" />
+          <span className="w-2 h-2 rounded-full bg-white/20" />
+          <span className="field-note text-[9px] text-white/40 ml-2">deploy.sh</span>
+        </div>
+        <div className="px-3.5 py-3.5 font-mono text-[11px] leading-[1.9]">
+          <div className="term-line term-line-1 text-white/65">$ git push origin main</div>
+          <div className="term-line term-line-2 text-amber-soft">✓ build passed · 3 tests</div>
+          <div className="term-line term-line-3 text-white">→ deployed to vercel.app</div>
+          <span className="cursor-blink inline-block w-[6px] h-[12px] bg-amber align-middle" />
+        </div>
+      </div>
     </div>
   );
 }
 
-// Someone presenting next to a small live-looking bar chart — bars grow and
-// shrink on a loop, pointer arm sways gently. Tucked in the top-left,
-// only on larger screens so it never competes with the hero text.
-function ChartScene() {
+// A small live system-status panel — response times per service, softly
+// pulsing status dots, and a redrawing sparkline. Reads like real
+// monitoring tooling rather than decoration, tucked top-left on larger
+// screens only so it never competes with the hero content.
+function MetricsScene() {
+  const rows = [
+    { label: "api", value: "142ms", delay: "0s" },
+    { label: "database", value: "18ms", delay: "0.4s" },
+    { label: "cache", value: "4ms", delay: "0.8s" },
+  ];
   return (
     <div
-      className="hidden lg:block fixed top-24 left-6 z-0 w-[170px] opacity-90 pointer-events-none"
+      className="hidden lg:block fixed top-24 left-6 z-0 w-[190px] opacity-95 pointer-events-none"
       aria-hidden="true"
     >
-      <svg viewBox="0 0 170 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <line x1="10" y1="130" x2="160" y2="130" stroke="#0B1F3A" strokeWidth="2" />
-        <circle cx="38" cy="40" r="11" stroke="#0B1F3A" strokeWidth="2" />
-        <path d="M38 51 L38 100 M38 62 L20 90 M38 62 L48 78" stroke="#0B1F3A" strokeWidth="2" />
-        <path d="M20 130 L38 100 L56 130" stroke="#0B1F3A" strokeWidth="2" />
-        <g className="pointer-sway">
-          <path d="M48 78 L64 62" stroke="#B9812F" strokeWidth="2" />
-        </g>
-        <rect className="bar bar-1" x="90" y="80" width="16" height="50" fill="#0B1F3A" fillOpacity="0.75" />
-        <rect className="bar bar-2" x="114" y="60" width="16" height="70" fill="#B9812F" fillOpacity="0.8" />
-        <rect className="bar bar-3" x="138" y="95" width="16" height="35" fill="#0B1F3A" fillOpacity="0.75" />
-      </svg>
-    </div>
-  );
-}
-
-// Someone walking with a laptop folder tucked under one arm — legs alternate
-// and the whole figure has a soft bob, suggesting motion. Placed on the
-// left edge, only on extra-large screens to keep things uncluttered.
-function WalkingScene() {
-  return (
-    <div
-      className="hidden xl:block fixed top-1/2 left-6 -translate-y-1/2 z-0 w-[110px] opacity-90 pointer-events-none"
-      aria-hidden="true"
-    >
-      <svg viewBox="0 0 110 150" fill="none" xmlns="http://www.w3.org/2000/svg" className="bob">
-        <circle cx="55" cy="26" r="11" stroke="#0B1F3A" strokeWidth="2" />
-        <path d="M55 37 L55 85" stroke="#0B1F3A" strokeWidth="2" />
-        <path d="M55 50 L38 65" stroke="#0B1F3A" strokeWidth="2" />
-        <rect x="20" y="58" width="20" height="14" rx="1.5" stroke="#B9812F" strokeWidth="2" />
-        <path d="M55 50 L72 60" stroke="#0B1F3A" strokeWidth="2" />
-        <g className="leg-a" style={{ transformOrigin: "55px 85px" }}>
-          <path d="M55 85 L45 122" stroke="#0B1F3A" strokeWidth="2" />
-        </g>
-        <g className="leg-b" style={{ transformOrigin: "55px 85px" }}>
-          <path d="M55 85 L68 122" stroke="#0B1F3A" strokeWidth="2" />
-        </g>
-      </svg>
+      <div className="rounded-lg border border-ink/10 bg-ink shadow-xl overflow-hidden">
+        <div className="px-3 py-2 border-b border-white/10">
+          <span className="field-note text-[9px] text-white/40">system status</span>
+        </div>
+        <div className="px-3.5 py-3.5 font-mono text-[10px] space-y-2.5">
+          {rows.map((r) => (
+            <div key={r.label} className="flex items-center justify-between text-white/65">
+              <span className="flex items-center gap-2">
+                <span
+                  className="status-dot w-1.5 h-1.5 rounded-full bg-amber inline-block"
+                  style={{ animationDelay: r.delay }}
+                />
+                {r.label}
+              </span>
+              <span>{r.value}</span>
+            </div>
+          ))}
+        </div>
+        <svg viewBox="0 0 190 34" className="block">
+          <path
+            className="sparkline"
+            d="M0 26 L22 20 L44 24 L66 10 L88 16 L110 6 L132 13 L154 5 L176 12 L190 4"
+            stroke="#B9812F"
+            strokeWidth="1.5"
+            fill="none"
+          />
+        </svg>
+      </div>
     </div>
   );
 }
@@ -137,9 +114,8 @@ export default function RootLayout({
       <body className="font-sans">
         {/* Faint blueprint grid, direct body-level sibling so nothing can clip it */}
         <div className="fixed inset-0 z-0 bg-grid-drift pointer-events-none" aria-hidden="true" />
-        <WorkingScene />
-        <ChartScene />
-        <WalkingScene />
+        <TerminalScene />
+        <MetricsScene />
         {/* Real page content, explicitly stacked above the decorative layers */}
         <div className="relative z-10">{children}</div>
       </body>
