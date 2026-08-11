@@ -78,23 +78,46 @@ button:focus-visible {
   animation: fadeInUp 0.8s ease-out both;
 }
 
-/* Soft, continuously drifting gradient blobs for a live background feel.
-   Pure CSS animation — runs as part of normal page rendering, no
-   JavaScript required, works fully offline, never stops. */
-@keyframes floatBlobA {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(60px, -40px) scale(1.12); }
-  66% { transform: translate(-40px, 30px) scale(0.92); }
+/* Desk scene animations: blinking cursor, sequential typing lines,
+   rising coffee steam, pulsing lamp glow. */
+@keyframes cursorBlink {
+  0%, 45% { opacity: 1; }
+  50%, 95% { opacity: 0; }
+  100% { opacity: 1; }
 }
-@keyframes floatBlobB {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-70px, 50px) scale(1.15); }
+.cursor-blink {
+  animation: cursorBlink 1s steps(1) infinite;
 }
-@keyframes floatBlobC {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  40% { transform: translate(45px, 45px) scale(0.88); }
-  70% { transform: translate(-30px, -55px) scale(1.08); }
+
+@keyframes typeLineFade {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 1; }
 }
-.blob-a { animation: floatBlobA 22s ease-in-out infinite; }
-.blob-b { animation: floatBlobB 28s ease-in-out infinite; }
-.blob-c { animation: floatBlobC 25s ease-in-out infinite; }
+.type-line {
+  animation: typeLineFade 4.5s ease-in-out infinite;
+}
+.type-line-1 { animation-delay: 0s; }
+.type-line-2 { animation-delay: 0.6s; }
+.type-line-3 { animation-delay: 1.2s; }
+
+@keyframes steamRise {
+  0% { transform: translateY(0); opacity: 0; }
+  20% { opacity: 0.6; }
+  80% { opacity: 0.15; }
+  100% { transform: translateY(-14px); opacity: 0; }
+}
+.steam {
+  transform-origin: center;
+  animation: steamRise 3s ease-in-out infinite;
+}
+.steam-2 {
+  animation-delay: 1s;
+}
+
+@keyframes lampGlow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+.lamp-glow {
+  animation: lampGlow 2.6s ease-in-out infinite;
+}

@@ -121,22 +121,60 @@ function Reveal({
   );
 }
 
-// Slow, softly drifting gradient "blobs" behind the content, plus the faint
-// blueprint grid. Pure CSS — no JavaScript involved at all, so there is no
-// failure mode where it silently doesn't run: the browser paints it as part
-// of rendering the page itself. Works fully offline, keeps animating
-// continuously. The animation keyframes live in globals.css
-// (.blob-a / .blob-b / .blob-c / .bg-grid-drift).
-function AnimatedBackdrop() {
+// A small, clearly-visible line-art scene of someone working at a desk,
+// tucked in the corner of the viewport. Kept to a single ink-navy stroke
+// color so it reads as a technical sketch rather than a cartoon — animated
+// with a blinking cursor, sequential "typing" lines, rising coffee steam,
+// and a softly pulsing desk lamp. Pure CSS animation (see globals.css),
+// hidden on small screens so it never competes with mobile content.
+function WorkingScene() {
   return (
     <div
-      className="fixed inset-0 -z-10 overflow-hidden pointer-events-none"
+      className="hidden md:block fixed bottom-6 right-6 -z-10 w-[240px] opacity-90 pointer-events-none"
       aria-hidden="true"
     >
-      <div className="absolute inset-0 bg-grid-drift" />
-      <div className="blob-a absolute -top-32 -left-24 w-[420px] h-[420px] rounded-full bg-ink/[0.055] blur-3xl" />
-      <div className="blob-b absolute top-1/3 -right-32 w-[480px] h-[480px] rounded-full bg-amber/[0.12] blur-3xl" />
-      <div className="blob-c absolute bottom-0 left-1/4 w-[380px] h-[380px] rounded-full bg-ink/[0.05] blur-3xl" />
+      <svg viewBox="0 0 240 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* desk */}
+        <line x1="10" y1="150" x2="230" y2="150" stroke="#0B1F3A" strokeWidth="2" />
+        {/* person: simple seated silhouette hunched toward laptop */}
+        <circle cx="70" cy="90" r="14" stroke="#0B1F3A" strokeWidth="2" />
+        <path
+          d="M50 148 C 50 115, 60 104, 78 104 C 96 104, 104 118, 100 138"
+          stroke="#0B1F3A"
+          strokeWidth="2"
+        />
+        {/* chair back */}
+        <path d="M46 150 L46 108" stroke="#0B1F3A" strokeWidth="2" />
+        {/* laptop base */}
+        <path d="M95 150 L150 150 L145 140 L100 140 Z" stroke="#0B1F3A" strokeWidth="2" />
+        {/* laptop screen */}
+        <rect x="100" y="108" width="42" height="32" rx="2" stroke="#0B1F3A" strokeWidth="2" />
+        {/* typing lines on screen, appear in sequence */}
+        <rect className="type-line type-line-1" x="105" y="115" width="20" height="2.5" fill="#0B1F3A" />
+        <rect className="type-line type-line-2" x="105" y="121" width="28" height="2.5" fill="#0B1F3A" />
+        <rect className="type-line type-line-3" x="105" y="127" width="16" height="2.5" fill="#0B1F3A" />
+        {/* blinking cursor */}
+        <rect className="cursor-blink" x="105" y="133" width="6" height="2.5" fill="#B9812F" />
+        {/* coffee mug */}
+        <path d="M170 132 L170 148 L188 148 L188 132 Z" stroke="#0B1F3A" strokeWidth="2" />
+        <path d="M188 135 Q196 135 196 140 Q196 145 188 145" stroke="#0B1F3A" strokeWidth="2" />
+        {/* rising steam, staggered */}
+        <path
+          className="steam steam-1"
+          d="M174 128 Q170 120 174 114 Q178 108 174 100"
+          stroke="#0B1F3A"
+          strokeWidth="1.5"
+        />
+        <path
+          className="steam steam-2"
+          d="M182 128 Q178 120 182 114 Q186 108 182 100"
+          stroke="#0B1F3A"
+          strokeWidth="1.5"
+        />
+        {/* desk lamp, softly pulsing glow */}
+        <path d="M40 60 L40 40 L20 30" stroke="#0B1F3A" strokeWidth="2" />
+        <circle className="lamp-glow" cx="20" cy="30" r="7" fill="#B9812F" />
+      </svg>
     </div>
   );
 }
@@ -144,8 +182,10 @@ function AnimatedBackdrop() {
 export default function Home() {
   return (
     <main className="relative min-h-screen bg-paper text-ink overflow-x-hidden">
-      {/* Live animated backdrop, sits behind everything */}
-      <AnimatedBackdrop />
+      {/* Faint blueprint grid behind everything */}
+      <div className="fixed inset-0 -z-10 bg-grid-drift pointer-events-none" aria-hidden="true" />
+      {/* Live animated desk scene */}
+      <WorkingScene />
 
       <header className="sticky top-0 z-10 bg-paper/90 backdrop-blur border-b border-line">
         <nav className="max-w-dossier mx-auto px-6 sm:px-8 h-14 flex items-center justify-between">
