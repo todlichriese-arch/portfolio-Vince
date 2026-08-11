@@ -121,112 +121,31 @@ function Reveal({
   );
 }
 
-// Live, slowly drifting network of connected nodes — reads like a systems
-// diagram quietly running in the background. Pauses if the user has
-// prefers-reduced-motion enabled, and pauses when the tab isn't visible.
-function NetworkBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
-
-    type Point = { x: number; y: number; vx: number; vy: number };
-    const COUNT = Math.max(24, Math.min(70, Math.floor((width * height) / 26000)));
-    const points: Point[] = Array.from({ length: COUNT }, () => ({
-      x: Math.random() * width,
-      y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.18,
-      vy: (Math.random() - 0.5) * 0.18,
-    }));
-
-    const LINK_DIST = 150;
-    let raf = 0;
-    let running = true;
-
-    function resize() {
-      width = canvas!.width = window.innerWidth;
-      height = canvas!.height = window.innerHeight;
-    }
-    window.addEventListener("resize", resize);
-
-    function onVisibility() {
-      running = document.visibilityState === "visible";
-      if (running && !prefersReduced) draw();
-    }
-    document.addEventListener("visibilitychange", onVisibility);
-
-    function draw() {
-      if (!running) return;
-      ctx!.clearRect(0, 0, width, height);
-
-      for (const p of points) {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
-      }
-
-      for (let i = 0; i < points.length; i++) {
-        for (let j = i + 1; j < points.length; j++) {
-          const a = points[i];
-          const b = points[j];
-          const dx = a.x - b.x;
-          const dy = a.y - b.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < LINK_DIST) {
-            ctx!.strokeStyle = `rgba(11, 31, 58, ${0.07 * (1 - dist / LINK_DIST)})`;
-            ctx!.lineWidth = 1;
-            ctx!.beginPath();
-            ctx!.moveTo(a.x, a.y);
-            ctx!.lineTo(b.x, b.y);
-            ctx!.stroke();
-          }
-        }
-      }
-
-      for (const p of points) {
-        ctx!.fillStyle = "rgba(185, 129, 47, 0.4)";
-        ctx!.beginPath();
-        ctx!.arc(p.x, p.y, 1.6, 0, Math.PI * 2);
-        ctx!.fill();
-      }
-
-      if (!prefersReduced) {
-        raf = requestAnimationFrame(draw);
-      }
-    }
-
-    draw();
-
-    return () => {
-      window.removeEventListener("resize", resize);
-      document.removeEventListener("visibilitychange", onVisibility);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
-
+// Slow, softly drifting gradient "blobs" behind the content, plus the faint
+// blueprint grid. Pure CSS — no JavaScript involved at all, so there is no
+// failure mode where it silently doesn't run: the browser paints it as part
+// of rendering the page itself. Works fully offline, keeps animating
+// continuously. The animation keyframes live in globals.css
+// (.blob-a / .blob-b / .blob-c / .bg-grid-drift).
+function AnimatedBackdrop() {
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 -z-10 pointer-events-none"
+    <div
+      className="fixed inset-0 -z-10 overflow-hidden pointer-events-none"
       aria-hidden="true"
-    />
+    >
+      <div className="absolute inset-0 bg-grid-drift" />
+      <div className="blob-a absolute -top-32 -left-24 w-[420px] h-[420px] rounded-full bg-ink/[0.055] blur-3xl" />
+      <div className="blob-b absolute top-1/3 -right-32 w-[480px] h-[480px] rounded-full bg-amber/[0.12] blur-3xl" />
+      <div className="blob-c absolute bottom-0 left-1/4 w-[380px] h-[380px] rounded-full bg-ink/[0.05] blur-3xl" />
+    </div>
   );
 }
 
 export default function Home() {
   return (
     <main className="relative min-h-screen bg-paper text-ink overflow-x-hidden">
-      {/* Live animated node network, sits behind everything */}
-      <NetworkBackground />
+      {/* Live animated backdrop, sits behind everything */}
+      <AnimatedBackdrop />
 
       <header className="sticky top-0 z-10 bg-paper/90 backdrop-blur border-b border-line">
         <nav className="max-w-dossier mx-auto px-6 sm:px-8 h-14 flex items-center justify-between">

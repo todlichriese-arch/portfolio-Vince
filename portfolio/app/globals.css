@@ -77,3 +77,24 @@ button:focus-visible {
 .animate-fade-up {
   animation: fadeInUp 0.8s ease-out both;
 }
+
+/* Soft, continuously drifting gradient blobs for a live background feel.
+   Pure CSS animation — runs as part of normal page rendering, no
+   JavaScript required, works fully offline, never stops. */
+@keyframes floatBlobA {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(60px, -40px) scale(1.12); }
+  66% { transform: translate(-40px, 30px) scale(0.92); }
+}
+@keyframes floatBlobB {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-70px, 50px) scale(1.15); }
+}
+@keyframes floatBlobC {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40% { transform: translate(45px, 45px) scale(0.88); }
+  70% { transform: translate(-30px, -55px) scale(1.08); }
+}
+.blob-a { animation: floatBlobA 22s ease-in-out infinite; }
+.blob-b { animation: floatBlobB 28s ease-in-out infinite; }
+.blob-c { animation: floatBlobC 25s ease-in-out infinite; }
