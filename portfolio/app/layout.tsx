@@ -76,6 +76,57 @@ function WorkingScene() {
   );
 }
 
+// Someone presenting next to a small live-looking bar chart — bars grow and
+// shrink on a loop, pointer arm sways gently. Tucked in the top-left,
+// only on larger screens so it never competes with the hero text.
+function ChartScene() {
+  return (
+    <div
+      className="hidden lg:block fixed top-24 left-6 z-0 w-[170px] opacity-90 pointer-events-none"
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 170 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="10" y1="130" x2="160" y2="130" stroke="#0B1F3A" strokeWidth="2" />
+        <circle cx="38" cy="40" r="11" stroke="#0B1F3A" strokeWidth="2" />
+        <path d="M38 51 L38 100 M38 62 L20 90 M38 62 L48 78" stroke="#0B1F3A" strokeWidth="2" />
+        <path d="M20 130 L38 100 L56 130" stroke="#0B1F3A" strokeWidth="2" />
+        <g className="pointer-sway">
+          <path d="M48 78 L64 62" stroke="#B9812F" strokeWidth="2" />
+        </g>
+        <rect className="bar bar-1" x="90" y="80" width="16" height="50" fill="#0B1F3A" fillOpacity="0.75" />
+        <rect className="bar bar-2" x="114" y="60" width="16" height="70" fill="#B9812F" fillOpacity="0.8" />
+        <rect className="bar bar-3" x="138" y="95" width="16" height="35" fill="#0B1F3A" fillOpacity="0.75" />
+      </svg>
+    </div>
+  );
+}
+
+// Someone walking with a laptop folder tucked under one arm — legs alternate
+// and the whole figure has a soft bob, suggesting motion. Placed on the
+// left edge, only on extra-large screens to keep things uncluttered.
+function WalkingScene() {
+  return (
+    <div
+      className="hidden xl:block fixed top-1/2 left-6 -translate-y-1/2 z-0 w-[110px] opacity-90 pointer-events-none"
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 110 150" fill="none" xmlns="http://www.w3.org/2000/svg" className="bob">
+        <circle cx="55" cy="26" r="11" stroke="#0B1F3A" strokeWidth="2" />
+        <path d="M55 37 L55 85" stroke="#0B1F3A" strokeWidth="2" />
+        <path d="M55 50 L38 65" stroke="#0B1F3A" strokeWidth="2" />
+        <rect x="20" y="58" width="20" height="14" rx="1.5" stroke="#B9812F" strokeWidth="2" />
+        <path d="M55 50 L72 60" stroke="#0B1F3A" strokeWidth="2" />
+        <g className="leg-a" style={{ transformOrigin: "55px 85px" }}>
+          <path d="M55 85 L45 122" stroke="#0B1F3A" strokeWidth="2" />
+        </g>
+        <g className="leg-b" style={{ transformOrigin: "55px 85px" }}>
+          <path d="M55 85 L68 122" stroke="#0B1F3A" strokeWidth="2" />
+        </g>
+      </svg>
+    </div>
+  );
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -87,6 +138,8 @@ export default function RootLayout({
         {/* Faint blueprint grid, direct body-level sibling so nothing can clip it */}
         <div className="fixed inset-0 z-0 bg-grid-drift pointer-events-none" aria-hidden="true" />
         <WorkingScene />
+        <ChartScene />
+        <WalkingScene />
         {/* Real page content, explicitly stacked above the decorative layers */}
         <div className="relative z-10">{children}</div>
       </body>

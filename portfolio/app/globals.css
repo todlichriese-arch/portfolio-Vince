@@ -121,3 +121,47 @@ button:focus-visible {
 .lamp-glow {
   animation: lampGlow 2.6s ease-in-out infinite;
 }
+
+/* Chart scene: growing/shrinking bars, swaying pointer arm */
+@keyframes barGrow {
+  0%, 100% { transform: scaleY(0.55); }
+  50% { transform: scaleY(1); }
+}
+.bar {
+  transform-box: fill-box;
+  transform-origin: bottom;
+  animation: barGrow 2.4s ease-in-out infinite;
+}
+.bar-1 { animation-delay: 0s; }
+.bar-2 { animation-delay: 0.4s; }
+.bar-3 { animation-delay: 0.8s; }
+
+@keyframes pointerSway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-10deg); }
+}
+.pointer-sway {
+  transform-box: fill-box;
+  transform-origin: bottom left;
+  animation: pointerSway 3s ease-in-out infinite;
+}
+
+/* Walking scene: alternating legs, gentle body bob */
+@keyframes legSwingA {
+  0%, 100% { transform: rotate(16deg); }
+  50% { transform: rotate(-16deg); }
+}
+@keyframes legSwingB {
+  0%, 100% { transform: rotate(-16deg); }
+  50% { transform: rotate(16deg); }
+}
+.leg-a { animation: legSwingA 1s ease-in-out infinite; }
+.leg-b { animation: legSwingB 1s ease-in-out infinite; }
+
+@keyframes gentleBob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+.bob {
+  animation: gentleBob 1s ease-in-out infinite;
+}
