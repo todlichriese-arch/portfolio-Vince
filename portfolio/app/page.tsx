@@ -120,6 +120,17 @@ function Reveal({
 }
 
 export default function Home() {
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+
+  useEffect(() => {
+    if (!lightboxOpen) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") setLightboxOpen(false);
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightboxOpen]);
+
   return (
     <main className="min-h-screen text-ink overflow-x-hidden">
       <header className="sticky top-0 z-10 bg-paper/90 backdrop-blur border-b border-line">
@@ -192,7 +203,12 @@ export default function Home() {
             className="shrink-0 self-center sm:self-start animate-fade-up"
             style={{ animationDelay: "160ms" }}
           >
-            <div className="w-40 sm:w-48 border border-ink p-1.5 transition-transform duration-500 hover:-translate-y-1 hover:shadow-lg">
+            <button
+              type="button"
+              onClick={() => setLightboxOpen(true)}
+              aria-label="View larger photo"
+              className="block w-40 sm:w-48 border border-ink p-1.5 transition-transform duration-500 hover:-translate-y-1 hover:shadow-lg cursor-zoom-in"
+            >
               <div className="relative w-full aspect-[4/5] grayscale hover:grayscale-0 transition-all duration-700">
                 <Image
                   src="/vince.JPG"
@@ -202,7 +218,7 @@ export default function Home() {
                   priority
                 />
               </div>
-            </div>
+            </button>
             <p className="field-note text-[10px] text-ink-soft mt-2 text-center">{CONTENT.fileNo}</p>
           </div>
         </div>
@@ -335,6 +351,39 @@ export default function Home() {
           {CONTENT.name} — {CONTENT.fileNo}
         </p>
       </footer>
+
+      {/* Photo lightbox — click backdrop, press Escape, or click the close
+          button to dismiss. Clicking the image itself does nothing, so a
+          misclick doesn't close it. */}
+      {lightboxOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-ink/90 backdrop-blur-sm p-6"
+          onClick={() => setLightboxOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Enlarged photo"
+        >
+          <button
+            type="button"
+            onClick={() => setLightboxOpen(false)}
+            aria-label="Close"
+            className="absolute top-6 right-6 w-11 h-11 flex items-center justify-center rounded-full border border-paper/30 text-paper text-2xl leading-none hover:bg-paper/10 transition-colors"
+          >
+            ×
+          </button>
+          <div
+            className="relative w-full max-w-md sm:max-w-lg aspect-[4/5]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
+              src="/vince.JPG"
+              alt={CONTENT.name}
+              fill
+              className="object-contain"
+            />
+          </div>
+        </div>
+      )}
     </main>
   );
 }
