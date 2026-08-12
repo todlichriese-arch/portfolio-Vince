@@ -197,7 +197,7 @@ export default function Home() {
             <div className="w-40 sm:w-48 border border-ink p-1.5 transition-transform duration-500 hover:-translate-y-1 hover:shadow-lg">
               <div className="relative w-full aspect-[4/5] grayscale hover:grayscale-0 transition-all duration-700">
                 <Image
-                  src="vince.jpg"
+                  src="/vince.jpg"
                   alt={CONTENT.name}
                   fill
                   className="object-cover"

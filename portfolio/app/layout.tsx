@@ -112,21 +112,21 @@ function MetricsScene() {
 function QueryScene() {
   return (
     <div
-      className="hidden md:block fixed bottom-6 left-6 z-0 w-[260px] opacity-95 pointer-events-none"
+      className="hidden lg:block fixed bottom-6 left-6 z-0 w-[190px] opacity-90 pointer-events-none"
       aria-hidden="true"
     >
       <div className="rounded-lg border border-ink/10 bg-ink shadow-xl overflow-hidden">
-        <div className="flex items-center gap-1.5 px-3 py-2 border-b border-white/10">
-          <span className="w-2 h-2 rounded-full bg-white/20" />
-          <span className="w-2 h-2 rounded-full bg-white/20" />
-          <span className="w-2 h-2 rounded-full bg-white/20" />
-          <span className="field-note text-[9px] text-white/40 ml-2">query.sql</span>
+        <div className="flex items-center gap-1 px-2.5 py-1.5 border-b border-white/10">
+          <span className="w-1.5 h-1.5 rounded-full bg-white/20" />
+          <span className="w-1.5 h-1.5 rounded-full bg-white/20" />
+          <span className="w-1.5 h-1.5 rounded-full bg-white/20" />
+          <span className="field-note text-[8px] text-white/40 ml-1.5">query.sql</span>
         </div>
-        <div className="px-3.5 py-3.5 font-mono text-[11px] leading-[1.9]">
+        <div className="px-2.5 py-2.5 font-mono text-[9px] leading-[1.7]">
           <div className="term-line term-line-1 text-white/65">$ select * from orders</div>
           <div className="term-line term-line-2 text-white/65">where status = &apos;paid&apos;</div>
           <div className="term-line term-line-3 text-amber-soft">✓ 342 rows · 6ms</div>
-          <span className="cursor-blink inline-block w-[6px] h-[12px] bg-amber align-middle" />
+          <span className="cursor-blink inline-block w-[5px] h-[10px] bg-amber align-middle" />
         </div>
       </div>
     </div>
