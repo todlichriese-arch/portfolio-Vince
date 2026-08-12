@@ -35,30 +35,28 @@ const CONTENT = {
       role: "Solo Developer",
       stack: "PHP · SQL · HTML · CSS · JavaScript",
       impact:
-        "The system was developed to improve the efficiency and accuracy of commission-related processes. By automating these tasks, the application reduces processing time, minimizes human error, and improves overall reliability. Overall, the project enhances the productivity of commission personnel by streamlining daily operations.",
+        "The system developed helped this startup company start their booking and payment operations.",
       description:
-        "A settlement-optimizing API for group expenses. The core problem was minimizing the number of payments needed to settle a group's debts — solved with a graph-reduction algorithm that cut average payments per group by 60%.",
+        "The system functions as a booking system that also has a messenger function to chat and send pictures to the admin of the page.",
       live: "https://ninedwarfs.kesug.com/ninedwarfs/Landing.php",
     },
     {
       title: "Zarate student registration and automated grading system",
       role: "Team of 3, Backend developer",
       stack: "Next.js · Javascript · PHP · SQL · HTML · CSS",
-      impact: "Cut average doc-lookup time from ~6 min to under 30 sec",
+      impact: "lowered the time needed to register each student and made it easier for teachers to grade",
       description:
-        "Semantic search over a 4,000-page internal knowledge base. I owned the ingestion pipeline and ranking logic, and set up eval tooling so retrieval quality could be measured on every change instead of judged by feel.",
+        "a LMS with registration of students that also functions as a google classroom for all their college students, has a automated grading system that easily computes the grades for each sem.",
       live: "https://example.com",
-      code: "https://github.com/yourhandle/fieldnotes",
     },
     {
       title: "Josefa LMS with code compilers and Live quiz sessions system",
       role: "Solo Developer",
-      stack: "PHP · Next.js · JavaScript · HTML · CSS · SQL · API",
-      impact: "In active use by a 15-person retail team",
+      stack: "PHP · Next.js · Java · JavaScript · HTML · CSS · SQL · API",
+      impact: "Used by teachers in Josefa school for teaching their students easiy with the code compilers",
       description:
-        "Shift scheduling for small teams, built after watching a friend manage a whole store's roster in a spreadsheet. Constraint-based auto-fill handles availability and overtime rules; managers just approve or adjust.",
+        "Made it easier for each student to self study with built in compilers for java, javascript, and html. Added a quizziz live function too for easier quizzes online.",
       live: "https://example.com",
-      code: "https://github.com/yourhandle/shiftboard",
     },
   ],
   experience: [
