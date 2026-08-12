@@ -17,7 +17,7 @@ const CONTENT = {
   links: [
     { label: "GitHub", href: "https://github.com/todlichriese-arch" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/vince-wendell-tee-56132b393?utm_source=share_via&utm_content=profile&utm_medium=member_android" },
-    { label: "Resume", href: "Vince Latest resume.pdf" },
+    { label: "Resume", href: "/Vince Latest resume.pdf" },
   ],
   about: [
     "I am a recent Bachelor of Science in Information Systems graduate passionate about software development and creating technology that solves real-world business challenges. My experience includes developing secure web applications, designing databases, and building systems that automate workflows, improve productivity, and provide better user experiences.",
